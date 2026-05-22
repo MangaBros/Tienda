@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaBros Chile - Tienda de Manga y Figuras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* VARIABLES DE DISEÑO (Fácil edición de colores) */
+        :root {
+            --bg-principal: #ffffff;
+            --bg-tarjetas: #f4f4f9;
+            --texto-principal: #222222;
+            --texto-secundario: #666666;
+            --color-acento: #8a2be2; /* Morado vibrante */
+            --color-borde: #dddddd;
+            --bg-input: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-principal: #120e1e; /* Morado muy oscuro */
+            --bg-tarjetas: #1d1830;
+            --texto-principal: #f5f5f7;
+            --texto-secundario: #b3a9cf;
+            --color-acento: #bb86fc;
+            --color-borde: #332952;
+            --bg-input: #292244;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-principal);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--bg-tarjetas);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--color-acento);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--color-acento);
+        }
+
+        .nav-tools {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--color-acento);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .instagram-link {
+            color: var(--texto-principal);
+            font-size: 1.4rem;
+            text-decoration: none;
+        }
+
+        .instagram-link:hover {
+            color: #e1306c;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* FILTROS */
+        .filtros-seccion {
+            background-color: var(--bg-tarjetas);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filtros-seccion label {
+            font-weight: bold;
+        }
+
+        .filtros-seccion select {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background-color: var(--bg-input);
+            color: var(--texto-principal);
+            border: 1px solid var(--color-borde);
+            outline: none;
+        }
+
+        /* GRILLA DE PRODUCTOS */
+        .catalogo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .manga-card {
+            background-color: var(--bg-tarjetas);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--color-borde);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .manga-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background-color: #ccc;
+        }
+
+        .manga-info {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .manga-titulo {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .manga-genero {
+            font-size: 0.85rem;
+            color: var(--color-acento);
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .manga-precio {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--texto-principal);
+            margin-bottom: 1rem;
+        }
+
+        .btn-pedido {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: var(--color-acento);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-pedido:hover {
+            opacity: 0.9;
+        }
+
+        /* SECCIÓN FIGURAS */
+        .figuras-proximamente {
+            background-color: var(--bg-tarjetas);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px dashed var(--color-acento);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* FORMULARIO DE PEDIDO */
+        .formulario-seccion {
+            background-color: var(--bg-tarjetas);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--color-borde);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--bg-input);
+            color: var(--texto-principal);
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        footer {
+            background-color: var(--bg-tarjetas);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--color-borde);
+        }
+
+        footer a {
+            color: var(--color-acento);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body data-theme="dark"> <!-- Por defecto inicia en modo oscuro morado -->
+
+    <header>
+        <div class="logo">
+            <h1>MangaBros <span style="font-size:1rem; color:var(--texto-secundario);">Chile</span></h1>
+        </div>
+        <div class="nav-tools">
+            <a href="https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk" target="_blank" class="instagram-link" title="Síguenos en Instagram">
+                <i class="fab fa-instagram"></i> @mangabros.cl_
+            </a>
+            <button class="theme-toggle" id="themeBtn" title="Cambiar Tema">
+                <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECCIÓN DE FILTROS -->
+        <section class="filtros-seccion">
+            <label for="filtroGenero"><i class="fas fa-filter"></i> Filtrar por Género:</label>
+            <select id="filtroGenero" onchange="filtrarProductos()">
+                <option value="todos">Todos los géneros</option>
+                <option value="shonen">Shonen</option>
+                <option value="seinen">Seinen</option>
+                <option value="romance">Romance / RomCom</option>
+                <option value="isekai">Isekai</option>
+            </select>
+        </section>
+
+        <!-- CATÁLOGO DE MANGAS -->
+        <h2>Catálogo de Mangas</h2>
+        <p style="color: var(--texto-secundario); margin-bottom: 1.5rem;">Haz clic en el manga que deseas para rellenar el formulario de pedido automáticamente.</p>
+        <section class="catalogo-grid" id="catalogoContainer"></section>
+
+        <!-- SECCIÓN FIGURAS A PETICIÓN -->
+        <section class="figuras-proximamente">
+            <h2><i class="fas fa-box-open"></i> Apartado de Figuras</h2>
+            <p style="margin-top: 0.5rem; color: var(--texto-secundario);">
+                <strong>(Próximamente)</strong> Podrás solicitar tus figuras favoritas bajo pedido escrito aquí mismo. ¡Atento a nuestras actualizaciones!
+            </p>
+        </section>
+
+        <!-- FORMULARIO DE PEDIDOS -->
+        <section class="formulario-seccion" id="pedido-seccion">
+            <h2><i class="fas fa-shopping-cart"></i> Formulario de Pedido (San Antonio, Chile)</h2>
+            <p style="color: var(--texto-secundario); margin-bottom: 1.5rem;">Coordina tu entrega en San Antonio. Al enviar, serás redirigido para concretar el pedido.</p>
+            
+            <form id="formPedido" onsubmit="enviarPedido(event)">
+                <div class="form-group">
+                    <label for="mangaSeleccionado">Manga(s) solicitado(s):</label>
+                    <input type="text" id="mangaSeleccionado" placeholder="Ej: Jujutsu Kaisen Vol. 1 (O selecciona uno del catálogo arriba)" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="horaEntrega">Hora estimada de entrega / retiro:</label>
+                    <input type="time" id="horaEntrega" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lugarEntrega">Lugar de entrega en San Antonio:</label>
+                    <select id="lugarEntrega" required>
+                        <option value="" disabled selected>Selecciona un punto de encuentro...</option>
+                        <option value="Plaza de Llolleo">Plaza de Llolleo</option>
+                        <option value="Plaza de Armas de San Antonio">Plaza de Armas de San Antonio</option>
+                        <option value="Mall Arauco San Antonio">Mall Arauco San Antonio</option>
+                        <option value="A domicilio (Acordar por interno)">A domicilio (Acordar por interno)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notas">Notas adicionales o Red Social de contacto:</label>
+                    <textarea id="notas" rows="3" placeholder="Ej: Mi instagram es @ejemplo o detalles de la edición que buscas"></textarea>
+                </div>
+
+                <button type="submit" class="btn-pedido">Confirmar y Solicitar Pedido</button>
+            </form>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 MangaBros Chile. Encuéntranos en <a href="https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk" target="_blank"><i class="fab fa-instagram"></i> @mangabros.cl_</a></p>
+        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 0.5rem;">San Antonio, Región de Valparaíso, Chile.</p>
+    </footer>
+
+    <script>
+        /* =======================================================
+           FÁCIL EDICIÓN: MODIFICA ESTE CATÁLOGO CUANDO QUIERAS
+           ======================================================= */
+        const CATALOGO = [
+            {
+                id: 1,
+                titulo: "Jujutsu Kaisen - Vol. 1",
+                genero: "shonen",
+                precio: 8990,
+                imagen: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400" // Cambiar por URL real de la portada
+            },
+            {
+                id: 2,
+                titulo: "The Rising of the Shield Hero - Vol. 1",
+                genero: "isekai",
+                precio: 9990,
+                imagen: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400"
+            },
+            {
+                id: 3,
+                titulo: "Chainsaw Man - Vol. 1",
+                genero: "shonen",
+                precio: 8990,
+                imagen: "https://images.unsplash.com/photo-1627389955611-70c92a5d2e2f?w=400"
+            },
+            {
+                id: 4,
+                titulo: "Berserk - Edición Máxima Vol. 1",
+                genero: "seinen",
+                precio: 15990,
+                imagen: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=400"
+            }
+        ];
+
+        // Lógica para cargar los productos en la web
+        function cargarCatalogo(productos) {
+            const container = document.getElementById('catalogoContainer');
+            container.innerHTML = "";
+
+            if(productos.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">No se encontraron mangas en este género.</p>`;
+                return;
+            }
+
+            productos.forEach(manga => {
+                const card = document.createElement('div');
+                card.className = 'manga-card';
+                card.innerHTML = `
+                    <img src="${manga.imagen}" alt="${manga.titulo}" class="manga-img">
+                    <div class="manga-info">
+                        <div>
+                            <div class="manga-genero">${manga.genero}</div>
+                            <h3 class="manga-titulo">${manga.titulo}</h3>
+                        </div>
+                        <div>
+                            <div class="manga-precio">$${manga.precio.toLocaleString('es-CL')}</div>
+                            <button class="btn-pedido" onclick="seleccionarManga('${manga.titulo}')">Sleccionar</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Lógica de Filtrado
+        function filtrarProductos() {
+            const filtro = document.getElementById('filtroGenero').value;
+            if (filtro === 'todos') {
+                cargarCatalogo(CATALOGO);
+            } else {
+                const filtrados = CATALOGO.filter(m => m.genero === filtro);
+                cargarCatalogo(filtrados);
+            }
+        }
+
+        // Auto-completar el formulario al hacer clic en un manga
+        function seleccionarManga(titulo) {
+            document.getElementById('mangaSeleccionado').value = titulo;
+            document.getElementById('pedido-seccion').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Manejo del cambio de tema (Claro / Morado Oscuro)
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+            }
+        });
+
+        // Enviar pedido (simulación de envío o redirección)
+        function enviarPedido(e) {
+            e.preventDefault();
+            const manga = document.getElementById('mangaSeleccionado').value;
+            const hora = document.getElementById('horaEntrega').value;
+            const lugar = document.getElementById('lugarEntrega').value;
+            const notas = document.getElementById('notas').value;
+
+            // Formateamos el mensaje para enviarlo directamente a tu Instagram o para que lo revises
+            const mensaje = `¡Nuevo Pedido en San Antonio!\nManga: ${manga}\nHora de encuentro: ${hora}\nLugar: ${lugar}\nNotas: ${notas}`;
+            
+            alert(`Pedido procesado localmente:\n\n${mensaje}\n\n¡Puedes copiar este texto para coordinar por nuestro Instagram @mangabros.cl_!`);
+            
+            // Opcional: Redirigir a Instagram directamente
+            window.open("https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk", "_blank");
+        }
+
+        // Inicializar la página cargando todo el catálogo
+        cargarCatalogo(CATALOGO);
+    </script>
+</body>
+</html>
