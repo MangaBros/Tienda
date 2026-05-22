@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaBros Chile - Tu tienda de Manga y Figuras en San Antonio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark"> <header>
+        <div class="logo-container">
+            <img src="image_0.png" alt="Logo MangaBros" class="main-logo">
+        </div>
+        <div class="nav-tools">
+            <a href="https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk" target="_blank" class="instagram-link" title="Síguenos en Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <button class="theme-toggle" id="themeBtn" title="Cambiar Tema">
+                <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="filtros-seccion neon-border-style">
+            <label for="filtroGenero" class="section-title"><i class="fas fa-filter"></i> Filtrar Catálogo</label>
+            <div class="select-wrapper">
+                <select id="filtroGenero" onchange="filtrarProductos()">
+                    <option value="todos">Todos los géneros</option>
+                    <option value="shonen">Shonen</option>
+                    <option value="seinen">Seinen</option>
+                    <option value="romance">Romance / RomCom</option>
+                    <option value="isekai">Isekai</option>
+                </select>
+            </div>
+        </section>
+
+        <h2 class="main-title">Catálogo de Mangas</h2>
+        <p class="subtitle">Toca el botón 'Seleccionar' de un manga para rellenar el formulario.</p>
+        <section class="catalogo-grid" id="catalogoContainer"></section>
+
+        <section class="figuras-proximamente neon-border-style">
+            <h2 class="section-title"><i class="fas fa-box-open"></i> Figuras a Petición</h2>
+            <p class="coming-soon">
+                <span class="badg-proximamente">(Próximamente)</span><br>
+                Podrás solicitar tus figuras favoritas bajo pedido escrito.
+            </p>
+        </section>
+
+        <section class="formulario-seccion neon-border-style" id="pedido-seccion">
+            <h2 class="section-title"><i class="fas fa-shopping-cart"></i> Pedido en San Antonio</h2>
+            
+            <form id="formPedido" onsubmit="enviarPedido(event)">
+                <div class="form-group">
+                    <label for="mangaSeleccionado">Manga(s) solicitado(s):</label>
+                    <input type="text" id="mangaSeleccionado" placeholder="Ej: Jujutsu Kaisen Vol. 1 o selecciónalo del catálogo" required>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="horaEntrega">Hora estimada:</label>
+                        <input type="time" id="horaEntrega" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lugarEntrega">Lugar de entrega:</label>
+                        <select id="lugarEntrega" required>
+                            <option value="" disabled selected>Punto de encuentro...</option>
+                            <option value="Plaza de Llolleo">Plaza de Llolleo</option>
+                            <option value="Plaza de Armas de S.A.">Plaza de Armas</option>
+                            <option value="Mall Arauco S.A.">Mall Arauco</option>
+                            <option value="A domicilio (Acordar)">A domicilio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notas">Notas o Red Social de contacto:</label>
+                    <textarea id="notas" rows="3" placeholder="Ej: Mi instagram es @usuario o detalles de la edición"></textarea>
+                </div>
+
+                <button type="submit" class="btn-enviar-pedido">Confirmar y Solicitar por Instagram</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <img src="image_0.png" alt="Logo MangaBros Pequeno" class="footer-logo">
+            <div class="footer-info">
+                <p>&copy; 2026 MangaBros Chile.</p>
+                <a href="https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk" target="_blank" class="footer-instagram"><i class="fab fa-instagram"></i> @mangabros.cl_</a>
+                <p class="location-text">San Antonio, Región de Valparaíso, Chile.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+  </html>
+  
