@@ -1,0 +1,456 @@
+/* =======================================================
+   ESTILOS GENERALES Y VARIABLES DE TEMA
+   ======================================================= */
+:root {
+    /* Paleta Inspirada en el Logo MangaBros (Claro) */
+    --bg-principal: #f8f9fc;
+    --bg-tarjetas: #ffffff;
+    --bg-input: #ffffff;
+    --texto-principal: #1a1a2e;
+    --texto-secundario: #50507a;
+    --color-acento-principal: #8a2be2; /* Púrpura */
+    --color-acento-secundario: #ff1aff; /* Rosa Neón */
+    --color-borde: #e1e1f1;
+    
+    /* Efectos */
+    --neon-glow: 0 0 10px rgba(138, 43, 226, 0.5);
+    --shadow-card: 0 4px 6px rgba(0,0,0,0.05);
+
+    /* Fuentes */
+    --font-head: 'Bangers', cursive;
+    --font-body: 'Poppins', sans-serif;
+}
+
+[data-theme="dark"] {
+    /* Paleta Inmersiva de Neón (Oscuro) */
+    --bg-principal: #0d0d17;
+    --bg-tarjetas: #16162a;
+    --bg-input: #20203a;
+    --texto-principal: #f0f0ff;
+    --texto-secundario: #a0a0cd;
+    --color-acento-principal: #bb86fc; /* Púrpura Clarito */
+    --color-acento-secundario: #ff77ff; /* Rosa Suave */
+    --color-borde: #303055;
+    
+    /* Efectos Neón Intensos */
+    --neon-glow: 0 0 15px rgba(255, 26, 255, 0.7), 0 0 30px rgba(138, 43, 226, 0.5);
+    --shadow-card: 0 0 20px rgba(0,0,0,0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* =======================================================
+   TÍTULOS ESTILO MANGA
+   ======================================================= */
+.main-title {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    letter-spacing: 1px;
+    color: var(--color-acento-principal);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 0 var(--color-borde);
+}
+
+[data-theme="dark"] .main-title {
+    color: var(--texto-principal);
+    text-shadow: 0 0 15px var(--color-acento-secundario);
+}
+
+.section-title {
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    color: var(--texto-principal);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--texto-secundario);
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* Estilo de borde de neón común para secciones */
+.neon-border-style {
+    background-color: var(--bg-tarjetas);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--color-borde);
+    box-shadow: var(--shadow-card);
+    margin-bottom: 3rem;
+}
+
+[data-theme="dark"] .neon-border-style {
+    border-color: var(--color-acento-secundario);
+    box-shadow: var(--neon-glow);
+}
+
+/* =======================================================
+   HEADER Y LOGO
+   ======================================================= */
+header {
+    background-color: var(--bg-tarjetas);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--color-acento-secundario);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] header {
+    box-shadow: 0 0 20px rgba(255, 26, 255, 0.3);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.main-logo {
+    height: 60px; /* Ajusta según tu gusto */
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
+}
+
+.nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.theme-toggle {
+    background: none;
+    border: 2px solid var(--color-acento-principal);
+    color: var(--color-acento-principal);
+    font-size: 1.2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-toggle:hover {
+    background-color: var(--color-acento-principal);
+    color: white;
+}
+
+.instagram-link {
+    color: var(--texto-principal);
+    font-size: 2rem;
+    text-decoration: none;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.instagram-link:hover {
+    color: var(--color-acento-secundario);
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* =======================================================
+   ESTILOS DE COMPONENTES
+   ======================================================= */
+/* Filtros */
+.filtros-seccion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.select-wrapper {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border-radius: 30px;
+    background-color: var(--bg-input);
+    color: var(--texto-principal);
+    border: 2px solid var(--color-borde);
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.select-wrapper::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-acento-principal);
+    pointer-events: none;
+}
+
+/* Catálogo */
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.manga-card {
+    background-color: var(--bg-tarjetas);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid var(--color-borde);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-acento-secundario);
+}
+
+[data-theme="dark"] .manga-card:hover {
+    box-shadow: var(--neon-glow);
+}
+
+.manga-img-container {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+}
+
+.manga-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.manga-card:hover .manga-img {
+    transform: scale(1.05);
+}
+
+.manga-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.manga-titulo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--texto-principal);
+    margin-bottom: 0.5rem;
+}
+
+.manga-genero {
+    font-size: 0.8rem;
+    color: var(--color-acento-secundario);
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgba(255, 26, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.manga-precio-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.manga-precio {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-acento-principal);
+}
+
+[data-theme="dark"] .manga-precio {
+    color: var(--texto-principal);
+}
+
+.btn-pedido-card {
+    padding: 0.6rem 1.2rem;
+    font-family: var(--font-body);
+    background-color: var(--bg-principal);
+    color: var(--color-acento-principal);
+    border: 2px solid var(--color-acento-principal);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-pedido-card:hover {
+    background-color: var(--color-acento-principal);
+    color: white;
+}
+
+/* Figuras Proximamente */
+.figuras-proximamente {
+    text-align: center;
+}
+
+.coming-soon {
+    font-size: 1.1rem;
+    color: var(--texto-secundario);
+    font-weight: 300;
+}
+
+.badg-proximamente {
+    font-family: var(--font-head);
+    color: var(--color-acento-secundario);
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-group-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+    font-size: 0.95rem;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    background-color: var(--bg-input);
+    color: var(--texto-principal);
+    border: 2px solid var(--color-borde);
+    border-radius: 10px;
+    outline: none;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--color-acento-principal);
+}
+
+.btn-enviar-pedido {
+    width: 100%;
+    padding: 1.2rem;
+    font-family: var(--font-body);
+    background-color: var(--color-acento-secundario);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 26, 255, 0.3);
+    transition: 0.3s;
+}
+
+.btn-enviar-pedido:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 26, 255, 0.5);
+}
+
+/* =======================================================
+   FOOTER
+   ======================================================= */
+footer {
+    background-color: var(--bg-tarjetas);
+    padding: 3rem 5%;
+    margin-top: 5rem;
+    border-top: 3px solid var(--color-acento-secundario);
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-logo {
+    height: 80px;
+    width: auto;
+    opacity: 0.8;
+}
+
+.footer-info {
+    color: var(--texto-secundario);
+}
+
+.footer-instagram {
+    color: var(--color-acento-principal);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.footer-instagram:hover {
+    text-decoration: underline;
+}
+
+.location-text {
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
