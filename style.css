@@ -1,0 +1,456 @@
+/* =======================================================
+   ESTILOS GENERALES Y VARIABLES DE TEMA
+   ======================================================= */
+:root {
+    /* Paleta Inspirada en el Logo MangaBros (Claro) */
+    --bg-principal: #f8f9fc;
+    --bg-tarjetas: #ffffff;
+    --bg-input: #ffffff;
+    --texto-principal: #1a1a2e;
+    --texto-secundario: #50507a;
+    --color-acento-principal: #8a2be2; /* Púrpura */
+    --color-acento-secundario: #ff1aff; /* Rosa Neón */
+    --color-borde: #e1e1f1;
+    
+    /* Efectos */
+    --neon-glow: 0 0 10px rgba(138, 43, 226, 0.5);
+    --shadow-card: 0 4px 6px rgba(0,0,0,0.05);
+
+    /* Fuentes */
+    --font-head: 'Bangers', cursive;
+    --font-body: 'Poppins', sans-serif;
+}
+
+[data-theme="dark"] {
+    /* Paleta Inmersiva de Neón (Oscuro) */
+    --bg-principal: #0d0d17;
+    --bg-tarjetas: #16162a;
+    --bg-input: #20203a;
+    --texto-principal: #f0f0ff;
+    --texto-secundario: #a0a0cd;
+    --color-acento-principal: #bb86fc; /* Púrpura Clarito */
+    --color-acento-secundario: #ff77ff; /* Rosa Suave */
+    --color-borde: #303055;
+    
+    /* Efectos Neón Intensos */
+    --neon-glow: 0 0 15px rgba(255, 26, 255, 0.7), 0 0 30px rgba(138, 43, 226, 0.5);
+    --shadow-card: 0 0 20px rgba(0,0,0,0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    -webkit-tap-highlight-color: transparent; /* Elimina el cuadro azul al tocar en celulares */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 1.5rem auto;
+    padding: 0 1rem; /* Margen ideal para bordes de pantalla de celular */
+}
+
+/* =======================================================
+   TÍTULOS ESTILO MANGA
+   ======================================================= */
+.main-title {
+    font-family: var(--font-head);
+    font-size: 2.5rem; /* Ajustado para pantallas móviles por defecto */
+    letter-spacing: 1px;
+    color: var(--color-acento-principal);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.3rem;
+    text-shadow: 2px 2px 0 var(--color-borde);
+}
+
+[data-theme="dark"] .main-title {
+    color: var(--texto-principal);
+    text-shadow: 0 0 15px var(--color-acento-secundario);
+}
+
+.section-title {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    color: var(--texto-principal);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--texto-secundario);
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+}
+
+/* Contenedor Base con estilo neón */
+.neon-border-style {
+    background-color: var(--bg-tarjetas);
+    padding: 1.5rem; /* Menor padding para ganar espacio en pantallas chicas */
+    border-radius: 15px;
+    border: 2px solid var(--color-borde);
+    box-shadow: var(--shadow-card);
+    margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .neon-border-style {
+    border-color: var(--color-acento-secundario);
+    box-shadow: var(--neon-glow);
+}
+
+/* =======================================================
+   HEADER Y LOGO (Diseño responsivo móvil fluido)
+   ======================================================= */
+header {
+    background-color: var(--bg-tarjetas);
+    padding: 0.8rem 4%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--color-acento-secundario);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] header {
+    box-shadow: 0 0 15px rgba(255, 26, 255, 0.2);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.main-logo {
+    height: 50px; /* Tamaño optimizado para barra superior de teléfono */
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.3));
+}
+
+.nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.theme-toggle {
+    background: none;
+    border: 2px solid var(--color-acento-principal);
+    color: var(--color-acento-principal);
+    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.instagram-link {
+    color: var(--texto-principal);
+    font-size: 1.6rem;
+    text-decoration: none;
+}
+
+.instagram-link:hover {
+    color: var(--color-acento-secundario);
+}
+
+/* =======================================================
+   FILTROS (Se adapta de fila a columna sola)
+   ======================================================= */
+.filtros-seccion {
+    display: flex;
+    flex-direction: column; /* Columna en móviles para que no se apriete */
+    align-items: flex-start;
+    gap: 0.8rem;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%; /* Ocupa todo el ancho en móviles */
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border-radius: 25px;
+    background-color: var(--bg-input);
+    color: var(--texto-principal);
+    border: 2px solid var(--color-borde);
+    appearance: none;
+    outline: none;
+}
+
+.select-wrapper::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-acento-principal);
+    pointer-events: none;
+}
+
+/* =======================================================
+   GRILLA DE CATÁLOGO RESPONSIVA (Súper Importante)
+   ======================================================= */
+.catalogo-grid {
+    display: grid;
+    /* En teléfonos pequeños usa 1 columna, en pantallas medianas calcula automáticamente */
+    grid-template-columns: 1fr; 
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.manga-card {
+    background-color: var(--bg-tarjetas);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid var(--color-borde);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-img-container {
+    width: 100%;
+    height: 380px; /* Excelente proporción vertical para portadas en celular */
+    overflow: hidden;
+    position: relative;
+}
+
+.manga-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.manga-info {
+    padding: 1.2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.manga-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto-principal);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+}
+
+.manga-genero {
+    font-size: 0.75rem;
+    color: var(--color-acento-secundario);
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgba(255, 26, 255, 0.1);
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.manga-precio-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-borde);
+    padding-top: 0.8rem;
+}
+
+.manga-precio {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-acento-principal);
+}
+
+[data-theme="dark"] .manga-precio {
+    color: var(--texto-principal);
+}
+
+.btn-pedido-card {
+    padding: 0.6rem 1.2rem;
+    font-family: var(--font-body);
+    background-color: var(--bg-principal);
+    color: var(--color-acento-principal);
+    border: 2px solid var(--color-acento-principal);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* =======================================================
+   SECCIÓN FIGURAS
+   ======================================================= */
+.figuras-proximamente {
+    text-align: center;
+}
+
+.coming-soon {
+    font-size: 1rem;
+    color: var(--texto-secundario);
+}
+
+.badg-proximamente {
+    font-family: var(--font-head);
+    color: var(--color-acento-secundario);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =======================================================
+   FORMULARIO RESPONSIVO
+   ======================================================= */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group-row {
+    display: flex;
+    flex-direction: column; /* Apilados verticalmente en celular para que no se acorte */
+    gap: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+    font-size: 0.9rem;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    background-color: var(--bg-input);
+    color: var(--texto-principal);
+    border: 2px solid var(--color-borde);
+    border-radius: 10px;
+    outline: none;
+}
+
+.btn-enviar-pedido {
+    width: 100%;
+    padding: 1rem;
+    font-family: var(--font-body);
+    background-color: var(--color-acento-secundario);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(255, 26, 255, 0.2);
+    margin-top: 0.5rem;
+}
+
+/* =======================================================
+   FOOTER
+   ======================================================= */
+footer {
+    background-color: var(--bg-tarjetas);
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+    border-top: 3px solid var(--color-acento-secundario);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Todo centrado y vertical en teléfonos */
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-logo {
+    height: 70px;
+    width: auto;
+}
+
+.footer-info p {
+    font-size: 0.9rem;
+}
+
+.footer-instagram {
+    color: var(--color-acento-principal);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.location-text {
+    font-size: 0.8rem;
+}
+
+
+/* =======================================================
+   MEDIA QUERIES: AJUSTES PARA PANTALLAS MÁS GRANDES
+   (Tablets y Computadoras)
+   ======================================================= */
+@media (min-width: 650px) {
+    .catalogo-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 Columnas en pantallas medianas */
+    }
+    .filtros-seccion {
+        flex-direction: row; /* En computadora se ve horizontal */
+        justify-content: space-between;
+    }
+    .select-wrapper {
+        max-width: 300px;
+    }
+    .form-group-row {
+        flex-direction: row; /* Hora y Lugar se ponen uno al lado del otro */
+    }
+    .form-group-row .form-group {
+        flex: 1;
+    }
+}
+
+@media (min-width: 950px) {
+    .catalogo-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 Columnas en pantallas de PC */
+    }
+    .main-title {
+        font-size: 3.5rem; /* Título más grande en PC */
+    }
+    .neon-border-style {
+        padding: 2.5rem;
+    }
+    .footer-content {
+        flex-direction: row; /* Footer horizontal en pantallas grandes */
+        text-align: left;
+        justify-content: center;
+    }
+  }
