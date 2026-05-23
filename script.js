@@ -5,7 +5,7 @@
 const SPREADSHEET_ID = "1P7YDnltiqwMW3l3wQMN8SozydVd_sALj6xMKbVaZBsw";
 
 // 2. Escribe el nombre exacto de la pestaña (ej. "Hoja1" o "Sheet1"):
-const SHEET_NAME = "Hoja1"; 
+const SHEET_NAME = "Sheet1"; 
 
 /* ==============================================================================
    LÓGICA AUTOMÁTICA: NO NECESITAS TOCAR NADA HACIA ABAJO
