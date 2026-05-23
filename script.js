@@ -2,7 +2,7 @@
    CONFIGURACIÓN DE TU GOOGLE SHEETS
    ============================================================================== */
 // 1. Pega aquí el ID largo que extrajiste de tu documento en el Paso 3:
-const SPREADSHEET_ID = "TU_ID_DE_GOOGLE_SHEETS_AQUÍ";
+const SPREADSHEET_ID = "1P7YDnltiqwMW3l3wQMN8SozydVd_sALj6xMKbVaZBsw";
 
 // 2. Escribe el nombre exacto de la pestaña (ej. "Hoja1" o "Sheet1"):
 const SHEET_NAME = "Hoja1"; 
