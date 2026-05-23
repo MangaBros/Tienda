@@ -1,51 +1,76 @@
 /* ==============================================================================
-   FÁCIL EDICIÓN DE CATÁLOGO: MODIFICA ESTA SECCIÓN CUANDO QUIERAS
-   - Copia una sección encerrada entre '{' y '},' y pégala para añadir uno nuevo.
-   - Asegúrate de que las URL de imagen terminen en .jpg, .png, etc.
-   - Usa géneros en minúsculas (shonen, seinen, isekai, romance) para el filtro.
+   CONFIGURACIÓN DE TU GOOGLE SHEETS
    ============================================================================== */
-   const CATALOGO = [
-    {
-        id: 1,
-        titulo: "Jujutsu Kaisen - Vol. 1",
-        genero: "shonen",
-        precio: 8990,
-        imagen: "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/b5/Volume_1.png/revision/latest?cb=20180703131751&path-prefix=es" // Reemplaza por URL real si esta falla
-    },
-    {
-        id: 2,
-        titulo: "Shield Hero - Vol. 1",
-        genero: "isekai",
-        precio: 9990,
-        imagen: "https://m.media-amazon.com/images/I/91r65A3mKLL._AC_UF1000,1000_QL80_.jpg"
-    },
-    {
-        id: 3,
-        titulo: "Chainsaw Man - Vol. 1",
-        genero: "shonen",
-        precio: 8990,
-        imagen: "https://m.media-amazon.com/images/I/81I2j6OOpML._AC_UF1000,1000_QL80_.jpg"
-    },
-    {
-        id: 4,
-        titulo: "Berserk Maximum Vol. 1",
-        genero: "seinen",
-        precio: 15990,
-        imagen: "https://m.media-amazon.com/images/I/91rU8S+pPmL._AC_UF1000,1000_QL80_.jpg"
-    }
-];
+// 1. Pega aquí el ID largo que extrajiste de tu documento en el Paso 3:
+const SPREADSHEET_ID = "TU_ID_DE_GOOGLE_SHEETS_AQUÍ";
+
+// 2. Escribe el nombre exacto de la pestaña (ej. "Hoja1" o "Sheet1"):
+const SHEET_NAME = "Hoja1"; 
+
 /* ==============================================================================
-   FIN DE LA SECCIÓN DE EDICIÓN FÁCIL
+   LÓGICA AUTOMÁTICA: NO NECESITAS TOCAR NADA HACIA ABAJO
    ============================================================================== */
+let CATALOGO = []; // Aquí se guardarán los mangas que vienen de Google
 
+// URL para consultar la hoja en formato CSV de manera pública y eficiente
+const GOOGLE_SHEETS_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_NAME}`;
 
-// Lógica principal para renderizar el catálogo en la grilla
+// Función para descargar los datos desde Google Sheets al cargar la web
+async function obtenerDatosDeGoogle() {
+    try {
+        const respuesta = await fetch(GOOGLE_SHEETS_URL);
+        const textoCSV = await respuesta.text();
+        
+        // Convertir el CSV de Google en un Arreglo de Objetos JavaScript
+        CATALOGO = procesarCSV(textoCSV);
+        
+        // Una vez descargados, cargamos el catálogo en la pantalla
+        cargarCatalogo(CATALOGO);
+    } catch (error) {
+        console.error("Error cargando los datos de Google Sheets:", error);
+        document.getElementById('catalogoContainer').innerHTML = 
+            `<p style="grid-column: 1/-1; text-align:center; padding: 2rem; color:red;">
+                Error al conectar con el inventario. Revisa la configuración de tu Google Sheet.
+             </p>`;
+    }
+}
+
+// Procesador básico de formato CSV a objetos utilizables por la web
+function procesarCSV(csvText) {
+    const lineas = csvText.split('\n');
+    const resultado = [];
+    
+    // Leer los encabezados de la fila 1 eliminando comillas dobles basura de Google
+    const encabezados = lineas[0].split(',').map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
+    
+    // Recorrer las filas de productos
+    for (let i = 1; i < lineas.length; i++) {
+        if (!lineas[i].trim()) continue; // Saltar filas vacías
+        
+        const celdas = lineas[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+        const objetoManga = {};
+        
+        encabezados.forEach((encabezado, indice) => {
+            let valor = celdas[indice];
+            // Si la columna es 'id' o 'precio', convertir a número
+            if (encabezado === 'id' || encabezado === 'precio') {
+                valor = parseInt(valor) || 0;
+            }
+            objetoManga[encabezado] = valor;
+        });
+        
+        resultado.push(objetoManga);
+    }
+    return resultado;
+}
+
+// Renderizar el catálogo en la interfaz móvil
 function cargarCatalogo(productos) {
     const container = document.getElementById('catalogoContainer');
-    container.innerHTML = ""; // Limpiar contenido previo
+    container.innerHTML = ""; 
 
     if(productos.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 2rem; color:var(--texto-secundario);">No se encontraron mangas en este género.</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 2rem; color:var(--texto-secundario);">No se encontraron mangas.</p>`;
         return;
     }
 
@@ -53,7 +78,6 @@ function cargarCatalogo(productos) {
         const card = document.createElement('article');
         card.className = 'manga-card';
         
-        // Formatear precio a moneda chilena ($10.000)
         const precioFormateado = `$${manga.precio.toLocaleString('es-CL')}`;
         
         card.innerHTML = `
@@ -75,18 +99,63 @@ function cargarCatalogo(productos) {
     });
 }
 
-// Lógica del filtro de género
+// Lógica del filtro por género
 function filtrarProductos() {
     const filtro = document.getElementById('filtroGenero').value;
     if (filtro === 'todos') {
         cargarCatalogo(CATALOGO);
     } else {
-        const filtrados = CATALOGO.filter(m => m.genero === filtro);
+        const filtrados = CATALOGO.filter(m => m.genero.toLowerCase() === filtro.toLowerCase());
         cargarCatalogo(filtrados);
     }
 }
 
-// Auto-rellenar el formulario al hacer clic en un manga
+// Auto-rellenar formulario al presionar un botón
+function seleccionarManga(titulo) {
+    const inputPedido = document.getElementById('mangaSeleccionado');
+    const seccionPedido = document.getElementById('pedido-seccion');
+
+    if (inputPedido.value === "") {
+        inputPedido.value = titulo;
+    } else if (!inputPedido.value.includes(titulo)) {
+        inputPedido.value += `, ${titulo}`;
+    }
+    seccionPedido.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Cambio de tema (Claro / Oscuro)
+const themeBtn = document.getElementById('themeBtn');
+const themeIcon = document.getElementById('themeIcon');
+const body = document.body;
+
+themeBtn.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fas fa-moon';
+    } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-sun';
+    }
+});
+
+// Enviar el pedido coordinando por Instagram
+function enviarPedido(e) {
+    e.preventDefault();
+    const manga = document.getElementById('mangaSeleccionado').value;
+    const hora = document.getElementById('horaEntrega').value;
+    const lugar = document.getElementById('lugarEntrega').value;
+    const notas = document.getElementById('notas').value;
+
+    const mensaje = `¡Nuevo Pedido desde la Web MangaBros!\n-----------------------------------------\n📚 Manga(s): ${manga}\n⏰ Hora encuentro: ${hora}\n📍 Lugar en S.A.: ${lugar}\n📝 Notas/Contacto: ${notas}`;
+    
+    alert(`Pedido preparado:\n\n${mensaje}\n\nTe redirigiremos a nuestro Instagram para concretar el pedido por mensaje directo.`);
+    window.open("https://www.instagram.com/mangabros.cl_?igsh=YTR1Y3hmcXNyMzZk", "_blank");
+}
+
+// COMENZAR: En lugar de cargar una lista fija, mandamos a buscar los datos a Google de inmediato
+obtenerDatosDeGoogle();
+                                                 // Auto-rellenar el formulario al hacer clic en un manga
 function seleccionarManga(titulo) {
     const inputPedido = document.getElementById('mangaSeleccionado');
     const seccionPedido = document.getElementById('pedido-seccion');
